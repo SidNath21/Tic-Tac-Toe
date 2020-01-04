@@ -44,19 +44,46 @@ for(let i=0; i<9; i++){
     playerMove.classList.add("playerMove");
     cells[i].appendChild(playerMove);
 
-    cells[i].addEventListener("click", function(){
-        
+    cells[i].addEventListener("mouseover", function(){
         if(!gameOver && board[i] == ""){
+
+            let mouseOverColor;
+            let text = ""
+            let textColor;
+            if(moveCount%2 == 0){
+                mouseOverColor = "blue";
+                text = "X";
+                textColor = "#3CBCC3";
+            }
+            else{
+                mouseOverColor = "red";
+                text = "O";
+                textColor = "#E40C2B";
+            }
+
+            cells[i].style.borderColor = mouseOverColor;
+            playerMove.textContent = text;
+            playerMove.style.opacity = "50%";
+            playerMove.style.color = textColor;
+        }
+    });
+
+
+    cells[i].addEventListener("mouseout", function(){
+         if(!gameOver && board[i] == ""){
+            cells[i].style.borderColor = "white";
+            playerMove.textContent = "";
+         } 
+    });
+
+    cells[i].addEventListener("click", function(){
+        if(!gameOver && board[i] == ""){
+            cells[i].style.borderColor = "white";
             currMove = (moveCount%2==0) ? "X" : "O";
             playerMove.textContent = currMove;
-
+            playerMove.style.opacity = "100%";
             playGame(i);
-
-            if(!gameOver) displayNextTurn();
-
-
-           
-            
+           if(!gameOver) displayNextTurn();   
         }
         });
  
@@ -127,11 +154,7 @@ function displayWin(a, b, c){
     else message = "Player 2 Wins!";
     msg.textContent = message;
 
-
-    //let color1 = "navy";
-    let color2 = "maroon";
-
-    // let color2 = "#E40C2B"
+     let color2 = "#E40C2B"
      let color1 = "#3CBCC3"
 
     for(let i=0; i<wins.length; i++){
@@ -158,6 +181,13 @@ function checkTie(){
     }
 
     msg.textContent = "It's a Tie!"
+    for(let i=0; i<cells.length; i++){
+        cells[i].style.borderColor = "#14A76C";
+    }
+
+    player1.style.borderColor = "#FF652F";
+    player2.style.borderColor = "#FF652F";
+
     return true;
 }
 
