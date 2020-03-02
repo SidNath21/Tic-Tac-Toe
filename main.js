@@ -202,3 +202,5 @@ function displayNextTurn(){
         player1.style.borderColor = "#272727";
     } 
 }
+
+
